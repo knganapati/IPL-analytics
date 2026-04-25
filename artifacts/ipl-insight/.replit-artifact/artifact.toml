@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "IPL Team Insight"
+version = "1.0.0"
+id = "artifacts/ipl-insight"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25022
+
+[services.development]
+run = "pnpm --filter @workspace/ipl-insight run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ipl-insight", "run", "build" ]
+publicDir = "artifacts/ipl-insight/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25022"
+BASE_PATH = "/"

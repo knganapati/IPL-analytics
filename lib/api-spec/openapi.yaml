@@ -3,13 +3,17 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: IPL Team Insight Tool API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: teams
+    description: IPL team operations
+  - name: live
+    description: Live cricket data
 paths:
   /healthz:
     get:
@@ -24,6 +28,60 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /teams:
+    get:
+      operationId: listTeams
+      tags: [teams]
+      summary: List all IPL teams
+      description: Returns the list of IPL franchises with basic identifiers and brand colors
+      responses:
+        "200":
+          description: List of IPL teams
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TeamSummary"
+  /teams/{teamId}:
+    get:
+      operationId: getTeam
+      tags: [teams]
+      summary: Get full IPL team insight
+      description: Returns detailed performance stats, top batsman & bowler, season-wise wins, and an auto-generated summary
+      parameters:
+        - in: path
+          name: teamId
+          required: true
+          schema:
+            type: string
+          description: Team identifier (e.g. "mi", "csk", "rcb")
+      responses:
+        "200":
+          description: Team insight details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamInsight"
+        "404":
+          description: Team not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /live:
+    get:
+      operationId: getLiveMatches
+      tags: [live]
+      summary: Live & current cricket matches
+      description: Returns currently live cricket matches via the CricketData.org API. Returns an empty list with a friendly note if the API key is not configured.
+      responses:
+        "200":
+          description: Live matches payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LiveMatchesResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +91,188 @@ components:
           type: string
       required:
         - status
-
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+        - error
+        - message
+    TeamSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Short identifier (e.g. "mi")
+        name:
+          type: string
+          description: Full franchise name (e.g. "Mumbai Indians")
+        shortName:
+          type: string
+          description: 3-letter short code (e.g. "MI")
+        primaryColor:
+          type: string
+          description: Brand primary color in hex
+        secondaryColor:
+          type: string
+          description: Brand secondary color in hex
+        homeCity:
+          type: string
+        founded:
+          type: integer
+        titles:
+          type: integer
+          description: Number of IPL titles won
+      required:
+        - id
+        - name
+        - shortName
+        - primaryColor
+        - secondaryColor
+        - homeCity
+        - founded
+        - titles
+    PlayerStat:
+      type: object
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+          description: e.g. "Batsman", "Bowler", "All-rounder"
+        matches:
+          type: integer
+        runs:
+          type: integer
+          nullable: true
+        average:
+          type: number
+          nullable: true
+        strikeRate:
+          type: number
+          nullable: true
+        wickets:
+          type: integer
+          nullable: true
+        economy:
+          type: number
+          nullable: true
+        bestFigures:
+          type: string
+          nullable: true
+      required:
+        - name
+        - role
+        - matches
+    SeasonWins:
+      type: object
+      properties:
+        season:
+          type: integer
+        played:
+          type: integer
+        won:
+          type: integer
+        lost:
+          type: integer
+      required:
+        - season
+        - played
+        - won
+        - lost
+    TeamInsight:
+      type: object
+      properties:
+        team:
+          $ref: "#/components/schemas/TeamSummary"
+        matches:
+          type: integer
+        wins:
+          type: integer
+        losses:
+          type: integer
+        noResult:
+          type: integer
+        winPercentage:
+          type: number
+        highestScore:
+          type: string
+          description: e.g. "263/5 vs RCB, 2013"
+        lowestScore:
+          type: string
+        topBatsman:
+          $ref: "#/components/schemas/PlayerStat"
+        topBowler:
+          $ref: "#/components/schemas/PlayerStat"
+        seasonWins:
+          type: array
+          items:
+            $ref: "#/components/schemas/SeasonWins"
+        summary:
+          type: string
+          description: Short 2-3 line auto-generated performance summary
+        captain:
+          type: string
+        coach:
+          type: string
+        homeGround:
+          type: string
+      required:
+        - team
+        - matches
+        - wins
+        - losses
+        - noResult
+        - winPercentage
+        - highestScore
+        - lowestScore
+        - topBatsman
+        - topBowler
+        - seasonWins
+        - summary
+        - captain
+        - coach
+        - homeGround
+    LiveMatch:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        matchType:
+          type: string
+        status:
+          type: string
+        venue:
+          type: string
+        date:
+          type: string
+        teams:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - name
+        - status
+        - teams
+    LiveMatchesResponse:
+      type: object
+      properties:
+        configured:
+          type: boolean
+          description: Whether the CricketData API key is configured
+        message:
+          type: string
+          nullable: true
+        matches:
+          type: array
+          items:
+            $ref: "#/components/schemas/LiveMatch"
+      required:
+        - configured
+        - matches

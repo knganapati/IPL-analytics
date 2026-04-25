@@ -6,6 +6,12 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
+export interface LiveMatch {
+  id: string;
+  name: string;
+  matchType?: string;
   status: string;
+  venue?: string;
+  date?: string;
+  teams: string[];
 }
