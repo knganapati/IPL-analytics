@@ -28,6 +28,9 @@ export const ListTeamsResponseItem = zod.object({
   homeCity: zod.string(),
   founded: zod.number(),
   titles: zod.number().describe("Number of IPL titles won"),
+  logoUrl: zod
+    .string()
+    .describe("Public URL to the team's official logo (PNG)"),
 });
 export const ListTeamsResponse = zod.array(ListTeamsResponseItem);
 
@@ -53,6 +56,9 @@ export const GetTeamResponse = zod.object({
     homeCity: zod.string(),
     founded: zod.number(),
     titles: zod.number().describe("Number of IPL titles won"),
+    logoUrl: zod
+      .string()
+      .describe("Public URL to the team's official logo (PNG)"),
   }),
   matches: zod.number(),
   wins: zod.number(),

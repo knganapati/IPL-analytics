@@ -126,6 +126,9 @@ components:
         titles:
           type: integer
           description: Number of IPL titles won
+        logoUrl:
+          type: string
+          description: Public URL to the team's official logo (PNG)
       required:
         - id
         - name
@@ -135,6 +138,7 @@ components:
         - homeCity
         - founded
         - titles
+        - logoUrl
     PlayerStat:
       type: object
       properties:

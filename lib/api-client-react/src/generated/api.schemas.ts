@@ -29,6 +29,8 @@ export interface TeamSummary {
   founded: number;
   /** Number of IPL titles won */
   titles: number;
+  /** Public URL to the team's official logo (PNG) */
+  logoUrl: string;
 }
 
 export interface PlayerStat {

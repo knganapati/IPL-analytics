@@ -9,6 +9,11 @@ import { buildSummary } from "../data/buildSummary";
 
 const router: IRouter = Router();
 
+function teamLogoUrl(id: string): string {
+  // Relative path resolved against the frontend's BASE_URL on the client.
+  return `teams/${id}.png`;
+}
+
 router.get("/teams", (_req, res) => {
   const summaries = IPL_TEAMS.map((t) => ({
     id: t.id,
@@ -19,6 +24,7 @@ router.get("/teams", (_req, res) => {
     homeCity: t.homeCity,
     founded: t.founded,
     titles: t.titles,
+    logoUrl: teamLogoUrl(t.id),
   }));
   const data = ListTeamsResponse.parse(summaries);
   res.json(data);
@@ -51,6 +57,7 @@ router.get("/teams/:teamId", (req, res) => {
       homeCity: team.homeCity,
       founded: team.founded,
       titles: team.titles,
+      logoUrl: teamLogoUrl(team.id),
     },
     matches: team.matches,
     wins: team.wins,

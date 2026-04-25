@@ -2,7 +2,7 @@
 
 ## Overview
 
-Full-stack web app: pick an IPL franchise from a dropdown and see a polished performance report — matches, wins, losses, win %, top batsman/bowler, season-wise wins chart, win/loss donut, plus a logic-based 2–3 line auto-summary. Live cricket strip in the footer is wired to the real CricketData.org API.
+Full-stack web app with a marketing-grade "Stadium Night" dark UI: a hero banner over the TATA IPL artwork, a 10-card grid of franchises (each with its real club logo and brand-color gradient), and a deep team-insight page with animated stat tiles, Performance / Top Players / Records tabs, donut + area + bar charts, a pull-quote auto-summary, and a horizontal switcher to jump between teams. Hash-based shareable URLs (`#/team/csk`). Live cricket strip in the footer is wired to the real CricketData.org API.
 
 ## Stack
 
