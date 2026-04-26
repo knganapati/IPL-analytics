@@ -7,10 +7,13 @@
  */
 
 export * from "./errorResponse";
+export * from "./headToHead";
 export * from "./healthStatus";
+export * from "./keyPlayer";
 export * from "./liveMatch";
 export * from "./liveMatchesResponse";
 export * from "./playerStat";
 export * from "./seasonWins";
+export * from "./strengths";
 export * from "./teamInsight";
 export * from "./teamSummary";

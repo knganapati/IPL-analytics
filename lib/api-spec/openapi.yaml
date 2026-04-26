@@ -187,6 +187,52 @@ components:
         - played
         - won
         - lost
+    HeadToHead:
+      type: object
+      properties:
+        opponentId:
+          type: string
+        opponentName:
+          type: string
+        opponentShortName:
+          type: string
+        opponentColor:
+          type: string
+        wins:
+          type: integer
+        losses:
+          type: integer
+      required:
+        - opponentId
+        - opponentName
+        - opponentShortName
+        - opponentColor
+        - wins
+        - losses
+    KeyPlayer:
+      type: object
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+        note:
+          type: string
+      required: [name, role, note]
+    Strengths:
+      type: object
+      properties:
+        batting:
+          type: number
+        bowling:
+          type: number
+        powerplay:
+          type: number
+        deathOvers:
+          type: number
+        fielding:
+          type: number
+      required: [batting, bowling, powerplay, deathOvers, fielding]
     TeamInsight:
       type: object
       properties:
@@ -224,6 +270,34 @@ components:
           type: string
         homeGround:
           type: string
+        homeWinPct:
+          type: number
+        awayWinPct:
+          type: number
+        avgFirstInningsScore:
+          type: number
+        avgPowerplayScore:
+          type: number
+        avgDeathOversRunRate:
+          type: number
+        headToHead:
+          type: array
+          items:
+            $ref: "#/components/schemas/HeadToHead"
+        keyPlayers2026:
+          type: array
+          items:
+            $ref: "#/components/schemas/KeyPlayer"
+        strengths:
+          $ref: "#/components/schemas/Strengths"
+        funFacts:
+          type: array
+          items:
+            type: string
+        decisionInsights:
+          type: array
+          items:
+            type: string
       required:
         - team
         - matches
@@ -240,6 +314,16 @@ components:
         - captain
         - coach
         - homeGround
+        - homeWinPct
+        - awayWinPct
+        - avgFirstInningsScore
+        - avgPowerplayScore
+        - avgDeathOversRunRate
+        - headToHead
+        - keyPlayers2026
+        - strengths
+        - funFacts
+        - decisionInsights
     LiveMatch:
       type: object
       properties:

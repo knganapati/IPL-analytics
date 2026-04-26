@@ -10,7 +10,6 @@ import { buildSummary } from "../data/buildSummary";
 const router: IRouter = Router();
 
 function teamLogoUrl(id: string): string {
-  // Relative path resolved against the frontend's BASE_URL on the client.
   return `teams/${id}.png`;
 }
 
@@ -47,6 +46,19 @@ router.get("/teams/:teamId", (req, res) => {
       ? Math.round((team.wins / team.matches) * 1000) / 10
       : 0;
 
+  // Enrich head-to-head with opponent metadata for the chart
+  const headToHead = team.headToHead.map((h) => {
+    const opp = IPL_TEAMS.find((t) => t.id === h.opponentId);
+    return {
+      opponentId: h.opponentId,
+      opponentName: opp?.name ?? h.opponentId,
+      opponentShortName: opp?.shortName ?? h.opponentId.toUpperCase(),
+      opponentColor: opp?.primaryColor ?? "#888",
+      wins: h.wins,
+      losses: h.losses,
+    };
+  });
+
   const insight = {
     team: {
       id: team.id,
@@ -73,6 +85,16 @@ router.get("/teams/:teamId", (req, res) => {
     captain: team.captain,
     coach: team.coach,
     homeGround: team.homeGround,
+    homeWinPct: team.homeWinPct,
+    awayWinPct: team.awayWinPct,
+    avgFirstInningsScore: team.avgFirstInningsScore,
+    avgPowerplayScore: team.avgPowerplayScore,
+    avgDeathOversRunRate: team.avgDeathOversRunRate,
+    headToHead,
+    keyPlayers2026: team.keyPlayers2026,
+    strengths: team.strengths,
+    funFacts: team.funFacts,
+    decisionInsights: team.decisionInsights,
   };
 
   const data = GetTeamResponse.parse(insight);

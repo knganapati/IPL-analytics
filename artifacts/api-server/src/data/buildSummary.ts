@@ -2,12 +2,12 @@ import type { Team } from "./iplTeams";
 
 /**
  * Logic-based 2-3 line performance summary.
- * The assignment explicitly allows "AI-generated or logic-based" — we go
- * logic-based for determinism, zero-cost, and zero external dependencies.
+ * Deterministic, zero-cost, reflects current 2026 standings.
  */
 export function buildSummary(team: Team): string {
   const winPct = (team.wins / Math.max(team.matches, 1)) * 100;
-  const recent = [...team.seasonWins].sort((a, b) => b.season - a.season).slice(0, 3);
+  const sorted = [...team.seasonWins].sort((a, b) => b.season - a.season);
+  const recent = sorted.slice(0, 3);
   const recentWinPct =
     recent.length > 0
       ? (recent.reduce((s, r) => s + r.won, 0) /
@@ -28,14 +28,14 @@ export function buildSummary(team: Team): string {
     team.titles >= 4
       ? `${team.titles} IPL titles to their name place them in the league's pantheon.`
       : team.titles >= 1
-        ? `With ${team.titles} title${team.titles > 1 ? "s" : ""}, they have tasted championship success.`
+        ? `With ${team.titles} title${team.titles > 1 ? "s" : ""} in the cabinet, they have tasted championship success.`
         : `They are still chasing that elusive maiden IPL trophy.`;
 
   let trendLine: string;
   if (recentWinPct - winPct >= 5) {
-    trendLine = `Recent seasons show clear upward momentum — they have been winning at a higher rate lately than their all-time average.`;
+    trendLine = `Their last three campaigns show clear upward momentum — winning at a higher rate than their all-time average.`;
   } else if (recentWinPct - winPct <= -5) {
-    trendLine = `Recent seasons suggest a dip in form, with their last three campaigns underperforming their long-term average.`;
+    trendLine = `Their last three campaigns suggest a dip in form, underperforming the long-term average.`;
   } else {
     trendLine = `Recent form has tracked their long-term average closely, suggesting a settled — if unspectacular — trajectory.`;
   }

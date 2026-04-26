@@ -53,6 +53,29 @@ export interface SeasonWins {
   lost: number;
 }
 
+export interface HeadToHead {
+  opponentId: string;
+  opponentName: string;
+  opponentShortName: string;
+  opponentColor: string;
+  wins: number;
+  losses: number;
+}
+
+export interface KeyPlayer {
+  name: string;
+  role: string;
+  note: string;
+}
+
+export interface Strengths {
+  batting: number;
+  bowling: number;
+  powerplay: number;
+  deathOvers: number;
+  fielding: number;
+}
+
 export interface TeamInsight {
   team: TeamSummary;
   matches: number;
@@ -71,6 +94,16 @@ export interface TeamInsight {
   captain: string;
   coach: string;
   homeGround: string;
+  homeWinPct: number;
+  awayWinPct: number;
+  avgFirstInningsScore: number;
+  avgPowerplayScore: number;
+  avgDeathOversRunRate: number;
+  headToHead: HeadToHead[];
+  keyPlayers2026: KeyPlayer[];
+  strengths: Strengths;
+  funFacts: string[];
+  decisionInsights: string[];
 }
 
 export interface LiveMatch {

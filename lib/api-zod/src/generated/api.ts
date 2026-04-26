@@ -107,6 +107,37 @@ export const GetTeamResponse = zod.object({
   captain: zod.string(),
   coach: zod.string(),
   homeGround: zod.string(),
+  homeWinPct: zod.number(),
+  awayWinPct: zod.number(),
+  avgFirstInningsScore: zod.number(),
+  avgPowerplayScore: zod.number(),
+  avgDeathOversRunRate: zod.number(),
+  headToHead: zod.array(
+    zod.object({
+      opponentId: zod.string(),
+      opponentName: zod.string(),
+      opponentShortName: zod.string(),
+      opponentColor: zod.string(),
+      wins: zod.number(),
+      losses: zod.number(),
+    }),
+  ),
+  keyPlayers2026: zod.array(
+    zod.object({
+      name: zod.string(),
+      role: zod.string(),
+      note: zod.string(),
+    }),
+  ),
+  strengths: zod.object({
+    batting: zod.number(),
+    bowling: zod.number(),
+    powerplay: zod.number(),
+    deathOvers: zod.number(),
+    fielding: zod.number(),
+  }),
+  funFacts: zod.array(zod.string()),
+  decisionInsights: zod.array(zod.string()),
 });
 
 /**

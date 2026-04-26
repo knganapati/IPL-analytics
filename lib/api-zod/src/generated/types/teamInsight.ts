@@ -5,8 +5,11 @@
  * IPL Team Insight Tool API
  * OpenAPI spec version: 0.1.0
  */
+import type { HeadToHead } from "./headToHead";
+import type { KeyPlayer } from "./keyPlayer";
 import type { PlayerStat } from "./playerStat";
 import type { SeasonWins } from "./seasonWins";
+import type { Strengths } from "./strengths";
 import type { TeamSummary } from "./teamSummary";
 
 export interface TeamInsight {
@@ -27,4 +30,14 @@ export interface TeamInsight {
   captain: string;
   coach: string;
   homeGround: string;
+  homeWinPct: number;
+  awayWinPct: number;
+  avgFirstInningsScore: number;
+  avgPowerplayScore: number;
+  avgDeathOversRunRate: number;
+  headToHead: HeadToHead[];
+  keyPlayers2026: KeyPlayer[];
+  strengths: Strengths;
+  funFacts: string[];
+  decisionInsights: string[];
 }
