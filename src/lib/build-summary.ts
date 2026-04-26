@@ -1,4 +1,4 @@
-import type { Team } from "./iplTeams";
+import type { Team } from "../data/teams";
 
 /**
  * Logic-based 2-3 line performance summary.
