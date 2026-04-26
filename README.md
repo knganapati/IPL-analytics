@@ -48,6 +48,7 @@ This project was developed as a complete analytics pipeline, starting from raw d
 ### Prerequisites
 - Node.js (v18+)
 - pnpm (Recommended)
+- Python 3.10+ (Optional, only for data analysis scripts in `analysis/`)
 
 ### Installation
 1. Clone the repository:
@@ -56,9 +57,14 @@ This project was developed as a complete analytics pipeline, starting from raw d
    cd IPL-analytics
    ```
 
-2. Install dependencies:
+2. Install UI dependencies:
    ```bash
    pnpm install
+   ```
+
+3. (Optional) Install analysis dependencies:
+   ```bash
+   pip install -r analysis/requirements.txt
    ```
 
 3. Build and Start:
