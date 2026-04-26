@@ -274,8 +274,9 @@ function PerformerCard({
 /* ---------- Main component ---------- */
 export default function TeamInsight({ teamId, onChangeTeam, allTeams }: TeamInsightProps) {
   const data = useMemo(() => {
-    const rawTeam = IPL_TEAMS.find((t) => t.id === teamId);
-    if (!rawTeam) return null;
+    const found = IPL_TEAMS.find((t) => t.id === teamId);
+    if (!found) return null;
+    const rawTeam = { ...found, logoUrl: `teams/${found.id}.png` };
 
     const winPercentage =
       rawTeam.matches > 0

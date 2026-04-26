@@ -297,7 +297,7 @@ function readHashTeam(): string {
 }
 
 function Home() {
-  const teams = useMemo(() => IPL_TEAMS, []);
+  const teams = useMemo(() => IPL_TEAMS.map(t => ({ ...t, logoUrl: `teams/${t.id}.png` })), []);
   const isLoading = false;
   const [selectedTeamId, setSelectedTeamIdRaw] = useState<string>(readHashTeam());
 
